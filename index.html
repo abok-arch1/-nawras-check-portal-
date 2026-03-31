@@ -2,235 +2,120 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>وزارة التعليم الكويتية | استعلام النتائج</title>
-    <link rel="icon" type="image/x-icon" href="logo.jpg">
-    
     <style>
-        :root {
-            --primary-color: #004080;
-            --secondary-color: #007bff;
-            --bg-color: #f8f9fa;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        .card {
-            background: #fff;
-            width: 100%;
-            max-width: 480px;
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            border-top: 6px solid var(--primary-color);
-            text-align: center;
-        }
-
-        .logo {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            margin: 0 auto 15px;
-            display: block;
-            object-fit: cover;
-            border: 3px solid #eee;
-        }
-
-        h2 { color: var(--primary-color); margin-bottom: 5px; font-size: 1.5rem; }
-        p.subtitle { color: #666; font-size: 0.95em; margin-bottom: 20px; font-weight: 500; }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 16px;
-            box-sizing: border-box;
-            text-align: center;
-            text-transform: uppercase;
-            margin-bottom: 15px;
-        }
-
-        button {
-            width: 100%;
-            padding: 15px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        button:hover { background-color: #002d5a; transform: translateY(-2px); }
-
-        #resultArea {
-            margin-top: 25px;
-            display: none;
-            text-align: right;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid #e0e0e0;
-            background-color: #fff;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .res-header {
-            border-bottom: 2px solid #f0f0f0;
-            margin-bottom: 15px;
-            padding-bottom: 8px;
-            font-weight: bold;
-            color: var(--primary-color);
-            text-align: center;
-        }
-
-        .res-item { 
-            margin-bottom: 8px; 
-            font-size: 14px; 
-            display: flex;
-            justify-content: space-between;
-            border-bottom: 1px inset #f9f9f9;
-            padding-bottom: 4px;
-        }
+        :root { --primary-color: #004080; --bg-color: #ffffff; }
+        html, body { height: 100%; margin: 0; padding: 0; background-color: var(--bg-color); overflow-x: hidden; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; justify-content: center; }
+        .card { background: #fff; width: 100%; min-height: 100vh; padding: 20px; box-sizing: border-box; border-top: 12px solid var(--primary-color); display: flex; flex-direction: column; align-items: center; }
+        @media (min-width: 500px) { .card { max-width: 500px; } }
+        .logo-container { width: 100%; display: flex; justify-content: center; margin: 20px 0; padding: 0 5%; box-sizing: border-box; }
+        .logo { width: 100%; max-width: 320px; height: auto; }
+        h2 { color: var(--primary-color); margin: 5px 0; font-size: 1.6rem; text-align: center; }
+        .subtitle { color: #666; font-size: 0.9em; margin-bottom: 30px; text-align: center; }
+        input { width: 100%; padding: 18px; border: 1.5px solid #ddd; border-radius: 12px; font-size: 18px; text-align: center; box-sizing: border-box; margin-bottom: 15px; font-weight: bold; background: #fdfdfd; outline: none; }
+        button.btn-search { width: 100%; padding: 18px; background-color: var(--primary-color); color: white; border: none; border-radius: 12px; font-size: 19px; font-weight: bold; cursor: pointer; }
+        .loader { display: none; border: 5px solid #f3f3f3; border-top: 5px solid var(--primary-color); border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        #printableResult { display: none; width: 100%; margin-top: 20px; padding: 20px; border: 1px solid #eee; border-radius: 15px; background-color: #fff; position: relative; text-align: right; box-sizing: border-box; }
+        #noDataBox { display: none; width: 100%; margin-top: 20px; padding: 20px; background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; border-radius: 12px; text-align: center; font-weight: bold; }
+        .res-header { text-align: center; color: var(--primary-color); font-weight: bold; border-bottom: 2px solid #f0f0f0; padding-bottom: 15px; margin-bottom: 20px; }
+        .res-row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f9f9f9; font-size: 14px; position: relative; z-index: 2; }
+        .res-label { color: #555; font-weight: 600; min-width: 100px; }
+        .res-val { color: var(--primary-color); font-weight: bold; text-align: left; flex: 1; }
+        .stamp-bg { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 180px; opacity: 0.15; z-index: 1; pointer-events: none; filter: sepia(1) saturate(5) hue-rotate(-50deg); }
+        .status-badge { background: #d4edda; color: #155724; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 1.1rem; border: 1px solid #c3e6cb; position: relative; z-index: 2; }
+        .validity { color: #d32f2f; font-size: 11px; text-align: center; margin-top: 15px; font-weight: bold; line-height: 1.6; }
+        .instructions { color: #004080; font-size: 12px; text-align: center; margin-top: 10px; font-weight: 500; line-height: 1.5; padding: 0 10px; }
         
-        .res-label { font-weight: bold; color: #333; }
-        .res-val { color: var(--primary-color); font-weight: 500; }
-
-        .status-badge {
-            display: block;
-            padding: 12px;
-            border-radius: 10px;
-            font-weight: bold;
-            margin-top: 15px;
-            text-align: center;
-            font-size: 1.1em;
-        }
-
-        .success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-        .waiting { background: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
-
-        .instruction-text {
-            font-weight: bold;
-            color: #004080;
-            margin-top: 15px;
-            text-align: center;
-            font-size: 1.05em;
-            line-height: 1.6;
-        }
-
-        footer { margin-top: 25px; font-size: 11px; color: #aaa; text-align: center; }
+        /* زر لقطة الشاشة الجديد */
+        .btn-screenshot-hint { display: none; width: 100%; padding: 16px; background-color: #28a745; color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 20px; font-size: 17px; text-align: center; }
+        
+        footer { margin-top: auto; padding: 20px 0; font-size: 11px; color: #aaa; text-align: center; width: 100%; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <img src="logo.jpg" alt="وزارة التعليم الكويتية" class="logo">
-    
+    <div class="logo-container"><img src="logo.jpg" alt="وزارة التعليم" class="logo"></div>
     <h2>وزارة التعليم الكويتية</h2>
-    <p class="subtitle">استعلام عن نتيجة التقديم</p>
+    <p class="subtitle">بوابة الاستعلام عن نتائج التعاقدات الخارجية</p>
 
     <input type="text" id="refID" placeholder="أدخل رقم المعاملة">
-    <button onclick="searchApplicant()">استعلام عن الحالة</button>
+    <button class="btn-search" onclick="search()">استعلام عن الحالة</button>
 
-    <div id="resultArea">
-        <div id="foundContent">
-            <div class="res-header">تفاصيل المعاملة:</div>
-            
-            <div class="res-item"><span class="res-label">رقم المعاملة:</span> <span class="res-val" id="outRef"></span></div>
-            <div class="res-item"><span class="res-label">الاسم:</span> <span class="res-val" id="outName"></span></div>
-            <div class="res-item"><span class="res-label">التخصص:</span> <span class="res-val" id="outSpecialty"></span></div>
-            <div class="res-item"><span class="res-label">المرحلة:</span> <span class="res-val" id="outLevel"></span></div>
-            <div class="res-item"><span class="res-label">العمر:</span> <span class="res-val" id="outAge"></span></div>
-            <div class="res-item"><span class="res-label">موقع الإقامة:</span> <span class="res-val" id="outLocation"></span></div>
-            <div class="res-item"><span class="res-label">رقم المتقدم:</span> <span class="res-val" id="outPhone"></span></div>
+    <div id="loader" class="loader"></div>
+    <div id="noDataBox">بياناتك قيد الفرز الرجاء الانتظار</div>
 
-            <div id="outStatus" class="status-badge"></div>
-            
-            <div id="instructionArea" class="instruction-text"></div>
-        </div>
-
-        <div id="notFoundContent" style="display: none;">
-             <div class="status-badge waiting">
-                بياناتك قيد الفرز، الرجاء الانتظار حتى تتم معالجتها.
-             </div>
-        </div>
+    <div id="printableResult">
+        <img src="stamp.png" class="stamp-bg" alt="ختم">
+        <div class="res-header">تفاصيل المعاملة الرسمية</div>
+        
+        <div class="res-row"><span class="res-label">رقم المعاملة:</span> <span class="res-val" id="outRef"></span></div>
+        <div class="res-row"><span class="res-label">الاسم الكامل:</span> <span class="res-val" id="outName"></span></div>
+        <div class="res-row"><span class="res-label">التخصص الوظيفي:</span> <span class="res-val" id="outSpec"></span></div>
+        <div class="res-row"><span class="res-label">المرحلة:</span> <span class="res-val" id="outLevel"></span></div>
+        <div class="res-row"><span class="res-label">العمر:</span> <span class="res-val" id="outAge"></span></div>
+        <div class="res-row"><span class="res-label">موقع الإقامة:</span> <span class="res-val" id="outLoc"></span></div>
+        <div class="res-row"><span class="res-label">رقم الهاتف:</span> <span class="res-val" id="outPhone"></span></div>
+        
+        <div class="status-badge">مقبول مبدئياً ✅</div>
+        
+        <div class="validity">⚠️ صلاحية هذا الإشعار يومين فقط من تاريخ الصدور.</div>
+        <div class="instructions">سوف يتم التواصل معك لمنحك التفاصيل الكاملة عن الرواتب والمخصصات والإجراءات الضرورية.</div>
     </div>
 
-    <footer>حقوق النشر © 2026 - وزارة التعليم الكويتية</footer>
+    <div id="screenshotBtn" class="btn-screenshot-hint">خذ لقطة شاشة للنتيجة 📸</div>
+
+    <footer>جميع الحقوق محفوظة © 2026 - وكالة نورس بالتنسيق مع وزارة التعليم</footer>
 </div>
 
 <script>
-function searchApplicant() {
-    const inputVal = document.getElementById('refID').value.trim().toUpperCase();
-    const resArea = document.getElementById('resultArea');
-    const foundDiv = document.getElementById('foundContent');
-    const notFoundDiv = document.getElementById('notFoundContent');
+const applicantsData = [
+    { id: "NORAS-KW-99996", name: "نضال عبدالهادي محمد يعقوب", spec: "كلية الشريعة /الفقه المقارن", level: "ثانوي", age: "35", loc: "ليبيا - طرابلس", phone: "00249911545457" },
+    { id: "NORAS-KW-62296", name: "زاكي الدين عبدالله عمر موسى", spec: "لغة عربية", level: "متوسط", age: "34", loc: "ليبيا - بنغازي", phone: "281946314872" },
+    { id: "NORAS-KW-19600", name: "ندي عثمان علي البوني", spec: "تاريخ", level: "ثانوي", age: "36", loc: "ليبيا (بسبب الحرب في السودان)", phone: "0126071879" },
+    { id: "NORAS-KW-36128", name: "حمزه علي رضوان ادم", spec: "رياضيات", level: "ثانوي", age: "34", loc: "ليبيا - الكفره", phone: "218946570279" },
+    { id: "NORAS-KW-10092", name: "محمد ابوالقاسم محمد الاصفر", spec: "علم اللغة ودراسات الترجمة", level: "ثانوي", age: "50", loc: "سبها- ليبيا", phone: "00218928605670" },
+    { id: "NORAS-KW-96120", name: "إبراهيم عربي ابراهيم يحي", spec: "لغة انجليزية", level: "ثانوي", age: "35", loc: "انجمينا", phone: "23586214797" },
+    { id: "NORAS-KW-38781", name: "نصرالدين هارون مختار عبيد الري", spec: "لغه انجليزيه", level: "ابتدائي", age: "43", loc: "ليبيا", phone: "00218930615938" },
+    { id: "NORAS-KW-75966", name: "محمدالطيب النور سليمان محمد", spec: "دراسات إسلامية", level: "ثانوي", age: "31", loc: "ليبيا", phone: "218943978363" },
+    { id: "NORAS-KW-60806", name: "عيسى حامد شكو", spec: "فلسفة وعلم الاجتماع", level: "ثانوي", age: "24", loc: "أنجمينا - تشاد", phone: "0023599342575" }
+];
 
-    if(!inputVal) {
-        alert("من فضلك أدخل رقم المعاملة أولاً");
-        return;
-    }
+function search() {
+    const idInput = document.getElementById('refID').value.trim().toUpperCase();
+    const resultBox = document.getElementById('printableResult');
+    const scBtn = document.getElementById('screenshotBtn');
+    const noDataBox = document.getElementById('noDataBox');
+    const loader = document.getElementById('loader');
 
-    // --- قاعدة البيانات ---
-    const applicantsData = [
-      {
-        "id": "NORAS-KW-27047",
-        "name": "محمد ادم حمدان",
-        "specialty": "رياضيات",
-        "level": "ثانوي",
-        "age": "18",
-        "location": "زامبيا",
-        "phone": "249999473654",
-        "decision": "accepted"
-      }
-    ];
+    resultBox.style.display = "none";
+    scBtn.style.display = "none";
+    noDataBox.style.display = "none";
 
-    const person = applicantsData.find(p => p.id === inputVal);
-    resArea.style.display = "block";
+    if(!idInput) { alert("يرجى إدخال رقم المعاملة"); return; }
+    loader.style.display = "block";
 
-    if(person) {
-        foundDiv.style.display = "block";
-        notFoundDiv.style.display = "none";
-
-        document.getElementById('outRef').innerText = person.id;
-        document.getElementById('outName').innerText = person.name;
-        document.getElementById('outSpecialty').innerText = person.specialty;
-        document.getElementById('outLevel').innerText = person.level;
-        document.getElementById('outAge').innerText = person.age;
-        document.getElementById('outLocation').innerText = person.location;
-        document.getElementById('outPhone').innerText = person.phone;
-        
-        const statusTag = document.getElementById('outStatus');
-        const instrTag = document.getElementById('instructionArea');
-
-        if(person.decision === "accepted") {
-            statusTag.innerText = "مقبول مبدئياً ✅";
-            statusTag.className = "status-badge success";
-            instrTag.innerText = "يرجى البدء في إجراءات تأكيد الطلب وإرسال الأوراق الرسمية.";
+    setTimeout(() => {
+        loader.style.display = "none";
+        const person = applicantsData.find(p => p.id === idInput);
+        if(person) {
+            document.getElementById('outRef').textContent = person.id;
+            document.getElementById('outName').textContent = person.name;
+            document.getElementById('outSpec').textContent = person.spec;
+            document.getElementById('outLevel').textContent = person.level;
+            document.getElementById('outAge').textContent = person.age;
+            document.getElementById('outLoc').textContent = person.loc;
+            document.getElementById('outPhone').textContent = person.phone;
+            resultBox.style.display = "block";
+            scBtn.style.display = "block";
         } else {
-            statusTag.innerText = "تحت المراجعة ⏳";
-            statusTag.className = "status-badge waiting";
-            instrTag.innerText = "طلبك لا يزال قيد المعالجة الإدارية، يرجى الانتظار.";
+            noDataBox.style.display = "block";
         }
-    } else {
-        foundDiv.style.display = "none";
-        notFoundDiv.style.display = "block";
-    }
+    }, 1200);
 }
 </script>
-
 </body>
 </html>
