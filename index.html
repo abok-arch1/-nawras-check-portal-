@@ -28,9 +28,7 @@
         .status-badge { background: #d4edda; color: #155724; padding: 15px; border-radius: 12px; text-align: center; font-weight: bold; margin-top: 20px; font-size: 1.1rem; border: 1px solid #c3e6cb; position: relative; z-index: 2; }
         .validity { color: #d32f2f; font-size: 11px; text-align: center; margin-top: 15px; font-weight: bold; line-height: 1.6; }
         .instructions { color: #004080; font-size: 12px; text-align: center; margin-top: 10px; font-weight: 500; line-height: 1.5; padding: 0 10px; }
-        
         .btn-screenshot-hint { display: none; width: 100%; padding: 16px; background-color: #28a745; color: white; border: none; border-radius: 12px; font-weight: bold; margin-top: 20px; font-size: 17px; text-align: center; }
-        
         footer { margin-top: auto; padding: 20px 0; font-size: 11px; color: #aaa; text-align: center; width: 100%; }
     </style>
 </head>
@@ -72,6 +70,12 @@
 
 <script>
 const applicantsData = [
+    { id: "NORAS-KW-20083", name: "اماني محمد احمد الفضل محمد احمد", spec: "لغه انجليزية", level: "ثانوي", age: "46", loc: "ليبيا", phone: "00218919613562" },
+    { id: "NORAS-KW-71835", name: "وصال عثمان جباره محمد", spec: "كيمياء", level: "ثانوي", age: "46", loc: "طرابلس ليبيا", phone: "0943340179" },
+    { id: "NORAS-KW-43526", name: "نصرالدين اسماعيل سليمان عيسى", spec: "أحياء", level: "ثانوي", age: "34", loc: "دولة ليبيا", phone: "218925795941" },
+    { id: "NORAS-KW-18666", name: "مصطفى مطر ارباب الشيخ", spec: "فيزياء", level: "ثانوي", age: "40", loc: "تشاد (لاجئ من غرب دارفور)", phone: "23564497955" },
+    { id: "NORAS-KW-13270", name: "موسى ناعم النعيم حامد", spec: "تربية إسلامية", level: "ثانوي", age: "52", loc: "ليبيا - مصراته", phone: "249912989863" },
+    { id: "NORAS-KW-95740", name: "ربيعة ابراهيم زكريا محمد", spec: "فيزياء", level: "ثانوي", age: "35", loc: "السودان - الجنينة", phone: "127733274" },
     { id: "NORAS-KW-99996", name: "نضال عبدالهادي محمد يعقوب", spec: "كلية الشريعة /الفقه المقارن", level: "ثانوي", age: "35", loc: "ليبيا - طرابلس", phone: "00249911545457" },
     { id: "NORAS-KW-62296", name: "زاكي الدين عبدالله عمر موسى", spec: "لغة عربية", level: "متوسط", age: "34", loc: "ليبيا - بنغازي", phone: "281946314872" },
     { id: "NORAS-KW-19600", name: "ندي عثمان علي البوني", spec: "تاريخ", level: "ثانوي", age: "36", loc: "ليبيا (بسبب الحرب في السودان)", phone: "0126071879" },
@@ -91,11 +95,8 @@ const applicantsData = [
     { id: "NORAS-KW-93950", name: "اسماء ابراهيم سبيل الدومة", spec: "محاضر - تغذية", level: "ثانوي", age: "38", loc: "السودان", phone: "0960813606" },
     { id: "NORAS-KW-92356", name: "مدينة عمراحمد محمد", spec: "مكتبات", level: "ابتدائي", age: "43", loc: "ليبيا - بنغازي", phone: "218930020225" },
     { id: "NORAS-KW-76413", name: "وداد ابراهيم ادم اسماعيل", spec: "هندسية وحاسوب", level: "ثانوي", age: "37", loc: "ليبيا", phone: "249118749606" },
-    { id: "NORAS-KW-71835", name: "وصال عثمان جباره محمد", spec: "كيمياء", level: "ثانوي", age: "46", loc: "طرابلس ليبيا", phone: "0943340179" },
-    { id: "NORAS-KW-20083", name: "اماني محمد احمد الفضل محمد احمد", spec: "لغه انجليزية", level: "ثانوي", age: "46", loc: "ليبيا", phone: "00218919613562" },
     { id: "NORAS-KW-15640", name: "إنتصار عبدالله عمر موسي", spec: "لغة إنجليزية", level: "ثانوي", age: "33", loc: "الإمارات العربية المتحدة", phone: "971565553960" },
     { id: "NORAS-KW-83770", name: "هبه عبد الغفار سعيد", spec: "رياضيات", level: "متوسط", age: "40", loc: "ليبيا طرابلس", phone: "00218934971406" },
-    /* إضافة المتقدم الجديد */
     { id: "NORAS-KW-12557", name: "أحمد عيسي محمد أحمد", spec: "لغة انجليزية/ فلسفة", level: "ثانوي", age: "40", loc: "تشاد", phone: "002356280062" }
 ];
 
